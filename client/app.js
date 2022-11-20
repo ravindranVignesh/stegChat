@@ -1,38 +1,75 @@
 import FileSaver from "file-saver";
-import readWavMetaData from "./readWavMetaData";
-import {
-  encode,
-  decode,
-  getBitsArray,
-  getString,
-  spliceIntoChunks,
-  endOfMsgMarker,
-} from "./steg";
+import { io } from "socket.io-client";
+import { encode, decode } from "./steg";
 
+const socket = io();
+
+const messageContainer = document.getElementById("message-container");
 const joinRoomButton = document.getElementById("room-button");
 const messageInput = document.getElementById("message-input");
 const roomInput = document.getElementById("room-input");
+const userNameInput = document.getElementById("username-input");
 const form = document.getElementById("form");
+
+socket.on("infoMessage", (message) => {
+  displayInfo(message);
+});
+
+socket.on("chatMessage", (msgObject) => {
+  let { userName, textMessage } = msgObject;
+  userName = userName === userNameInput.value ? "You" : userName;
+  displayMessage(userName, textMessage);
+});
+
+socket.on("audioFile", (fileMessageObject) => {
+  const userName = fileMessageObject.userName;
+  if (userName === userNameInput.value) return;
+  const arrayBuffer = fileMessageObject.body;
+  const fileName = fileMessageObject.fileName;
+  const blob = new Blob([arrayBuffer], { type: "audio/wav" });
+  FileSaver.saveAs(blob, fileName);
+  const secretMessage = decode(arrayBuffer);
+  console.log(secretMessage);
+  displayMessage("Steganographic message", secretMessage);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  const userName = userNameInput.value;
   const textMessage = messageInput.value;
   const room = roomInput.value;
 
   if (textMessage == "") return;
-  displayMessage(textMessage);
-
+  // displayMessage(textMessage);
   messageInput.value = "";
+  // emit message to server
+  socket.emit("chatMessage", { userName, textMessage });
 });
 
 joinRoomButton.addEventListener("click", () => {
   const room = roomInput.value;
 });
 
-const displayMessage = (messageToBeDisplayed) => {
+const displayMessage = (userName, textMessage) => {
   const div = document.createElement("div");
-  div.textContent = messageToBeDisplayed;
-  document.getElementById("message-container").append(div);
+  div.classList.add("chat-message");
+  div.innerHTML = `<p class="chat-message-header">${userName} <span>11:11</span> </p>
+	<p class="chat-message-body">${textMessage}</p>
+	`;
+  if (userName == "You") {
+    div.classList.add("self-message");
+  }
+  messageContainer.append(div);
+};
+
+const displayInfo = (message) => {
+  const div = document.createElement("div");
+  div.classList.add("info-message");
+  div.innerHTML = `
+	<p class="info-message-header">StegChat <span>11:11</span> </p>
+	<p class="info-message-body">${message}</p>
+	`;
+  messageContainer.append(div);
 };
 
 // -------------------------------------------------
@@ -45,11 +82,26 @@ encodeBtn.addEventListener("click", async () => {
     console.log(`select files to proceed with encoding`);
     return;
   }
+  const fileFullName = wavFileInput.files[0].name;
+  const fileName = fileFullName.slice(0, fileFullName.search(".wav"));
   const secretMessage = document.getElementById("secret-message").value;
   const arrayBuffer = await getArrayBuffer(wavFileInput);
   const encodedBuffer = encode(arrayBuffer, secretMessage);
   const encodedBlob = new Blob([encodedBuffer], { type: "audio/wav" });
-  FileSaver.saveAs(encodedBlob, "encodedAud.wav");
+  const encodedFile = new File([encodedBlob], `${fileName}-encoded.wav`, {
+    type: "audio/wav",
+  });
+  FileSaver.saveAs(encodedBlob, `${fileName}-encoded.wav`);
+  // send encodedFile via socket
+  const fileMessageObject = {
+    userName: userNameInput.value,
+    type: "file",
+    body: encodedFile,
+    mimeType: encodedFile.type,
+    fileName: encodedFile.name,
+  };
+  socket.emit("audioFile", fileMessageObject);
+
   verifySteg(wavFileInput);
 });
 
@@ -67,30 +119,4 @@ const getArrayBuffer = async (wavFileInput) => {
   let file = wavFileInput.files[0];
   const arrBuff = await file.arrayBuffer();
   return arrBuff;
-};
-
-const readWavFiles = (input) => {
-  if (input.files == undefined || input.files.length == 0) return;
-
-  const length = input.files.length;
-
-  for (let i = 0; i < length; i++) {
-    let bufReader = new FileReader();
-    let file = input.files[i];
-
-    bufReader.onloadend = (e) => {
-      console.log(`array buffer : ${i + 1}`);
-      let arrayBuffer = e.target.result;
-      console.log(`size in MB: ${MegaBytes(arrayBuffer.byteLength)}`);
-      console.log(arrayBuffer);
-      let metaData = readWavMetaData(arrayBuffer);
-      console.log(`metaData : ${JSON.stringify(metaData, undefined, 2)}`);
-    };
-
-    bufReader.readAsArrayBuffer(file);
-  }
-};
-
-const MegaBytes = (bytes) => {
-  return parseFloat((bytes / 1024 / 1024).toFixed(3));
 };
