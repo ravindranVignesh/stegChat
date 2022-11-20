@@ -1,7 +1,8 @@
 {
   "name": "stegchat-server",
+	"private": true,
   "version": "0.0.1",
-  "description": "A simple chat app which implements Audio Steganography",
+  "description": "Server for A simple chat app which implements Audio Steganography",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-    "socket.io": "^4.5.3"
+    "socket.io": "^4.5.3",
+    "stegchat": "file:.."
   }
 }

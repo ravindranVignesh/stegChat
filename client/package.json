@@ -1,18 +1,22 @@
 {
-  "name": "client",
+  "name": "stegchat-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "Client for A simple chat app which implements Audio Steganography",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
+  "author": "ravindranVignesh",
+  "license": "ISC",
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "vite": "^3.2.3"
   },
   "dependencies": {
-    "file-saver": "^2.0.5"
+    "file-saver": "^2.0.5",
+    "stegchat": "file:.."
   }
 }
