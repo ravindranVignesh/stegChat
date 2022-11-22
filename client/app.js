@@ -9,6 +9,9 @@ const roomId = urlParams.get("roomId");
 
 const socket = io();
 
+// join the room
+socket.emit("joinRoom", { userName, roomId });
+
 const messageContainer = document.getElementById("message-container");
 const joinRoomButton = document.getElementById("room-button");
 const messageInput = document.getElementById("message-input");

@@ -14,6 +14,11 @@ app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // run when client connects
 io.on("connection", (socket) => {
+  socket.on("joinRoom", ({ userName, roomId }) => {
+    socket.join(roomId);
+    console.log(`${userName} (ID: ${socket.id}) joined ${roomId}`);
+  });
+
   // welcome current user
   socket.emit("infoMessage", "connected to StegChat"); // socket.emit is only to one of the client
 
