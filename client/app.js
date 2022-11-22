@@ -7,31 +7,36 @@ const urlParams = new URLSearchParams(queryString);
 const userName = urlParams.get("username");
 const roomId = urlParams.get("roomId");
 
+const messageContainer = document.getElementById("message-container");
+const leaveRoomButton = document.getElementById("leave-room-btn");
+const messageInput = document.getElementById("message-input");
+const form = document.getElementById("form");
+
 const socket = io();
 
 // join the room
 socket.emit("joinRoom", { userName, roomId });
 
-const messageContainer = document.getElementById("message-container");
-const joinRoomButton = document.getElementById("room-button");
-const messageInput = document.getElementById("message-input");
-const roomInput = document.getElementById("room-input");
-const userNameInput = document.getElementById("username-input");
-const form = document.getElementById("form");
+// leave room
+leaveRoomButton.addEventListener("click", () => {
+  socket.emit("leaveRoom", { userName, roomId });
+  window.location = "../index.html";
+});
 
 socket.on("infoMessage", (message) => {
   displayInfo(message);
 });
 
 socket.on("chatMessage", (msgObject) => {
-  let { userName, textMessage } = msgObject;
-  userName = userName === userNameInput.value ? "You" : userName;
-  displayMessage(userName, textMessage);
+  let { textMessage } = msgObject;
+  let sender = msgObject.userName;
+  sender = sender == userName ? "You" : sender;
+  displayMessage(sender, textMessage);
 });
 
 socket.on("audioFile", (fileMessageObject) => {
-  const userName = fileMessageObject.userName;
-  if (userName === userNameInput.value) return;
+  const sender = fileMessageObject.userName;
+  if (sender === userName) return;
   const arrayBuffer = fileMessageObject.body;
   const fileName = fileMessageObject.fileName;
   const blob = new Blob([arrayBuffer], { type: "audio/wav" });
@@ -43,9 +48,7 @@ socket.on("audioFile", (fileMessageObject) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const userName = userNameInput.value;
   const textMessage = messageInput.value;
-  const room = roomInput.value;
 
   if (textMessage == "") return;
   // displayMessage(textMessage);
@@ -54,17 +57,13 @@ form.addEventListener("submit", (e) => {
   socket.emit("chatMessage", { userName, textMessage });
 });
 
-joinRoomButton.addEventListener("click", () => {
-  const room = roomInput.value;
-});
-
-const displayMessage = (userName, textMessage) => {
+const displayMessage = (sender, textMessage) => {
   const div = document.createElement("div");
   div.classList.add("chat-message");
-  div.innerHTML = `<p class="chat-message-header">${userName} <span>11:11</span> </p>
+  div.innerHTML = `<p class="chat-message-header">${sender} <span>11:11</span> </p>
 	<p class="chat-message-body">${textMessage}</p>
 	`;
-  if (userName == "You") {
+  if (sender == "You") {
     div.classList.add("self-message");
   }
   messageContainer.append(div);
@@ -102,7 +101,7 @@ encodeBtn.addEventListener("click", async () => {
   FileSaver.saveAs(encodedBlob, `${fileName}-encoded.wav`);
   // send encodedFile via socket
   const fileMessageObject = {
-    userName: userNameInput.value,
+    userName: userName,
     type: "file",
     body: encodedFile,
     mimeType: encodedFile.type,

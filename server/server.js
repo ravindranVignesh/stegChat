@@ -14,9 +14,16 @@ app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // run when client connects
 io.on("connection", (socket) => {
+  // join room
   socket.on("joinRoom", ({ userName, roomId }) => {
     socket.join(roomId);
     console.log(`${userName} (ID: ${socket.id}) joined ${roomId}`);
+  });
+
+  // leave room
+  socket.on("leaveRoom", ({ userName, roomId }) => {
+    socket.leave(roomId);
+    console.log(`${userName} (ID: ${socket.id}) left ${roomId}`);
   });
 
   // welcome current user
