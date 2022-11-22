@@ -23,10 +23,12 @@ leaveRoomButton.addEventListener("click", () => {
   window.location = "../index.html";
 });
 
+// receiving infoMessages
 socket.on("infoMessage", (message) => {
   displayInfo(message);
 });
 
+// receiveing chatMessages
 socket.on("chatMessage", (msgObject) => {
   let { textMessage } = msgObject;
   let sender = msgObject.userName;
@@ -34,6 +36,7 @@ socket.on("chatMessage", (msgObject) => {
   displayMessage(sender, textMessage);
 });
 
+// receiveing audioFiles
 socket.on("audioFile", (fileMessageObject) => {
   const sender = fileMessageObject.userName;
   if (sender === userName) return;

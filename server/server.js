@@ -9,42 +9,50 @@ const io = new socketio.Server(server, {
   maxHttpBufferSize: 1e8,
 });
 
+//# declare a global haspmap to store the socketId, userName = > useful for displaying left message when user is "disconnecting" .
+
 // set static folder
 app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // run when client connects
 io.on("connection", (socket) => {
+  // welcome current user
+  // send only to the client
+  socket.emit("infoMessage", "connected to StegChat");
+
   // join room
   socket.on("joinRoom", ({ userName, roomId }) => {
     socket.join(roomId);
-    console.log(`${userName} (ID: ${socket.id}) joined ${roomId}`);
+    // Broadcast to room except client when client joins
+    socket.to(roomId).emit("infoMessage", `"${userName}" has joined the chat`);
   });
 
   // leave room
   socket.on("leaveRoom", ({ userName, roomId }) => {
     socket.leave(roomId);
-    console.log(`${userName} (ID: ${socket.id}) left ${roomId}`);
-  });
-
-  // welcome current user
-  socket.emit("infoMessage", "connected to StegChat"); // socket.emit is only to one of the client
-
-  // Broadcast when a user connects
-  socket.broadcast.emit("infoMessage", "a user has joined the chat"); // socket.broadcast.emit all clients except the one who connected
-
-  // Runs when client disconnects
-  socket.on("disconnect", () => {
-    io.emit("infoMessage", "a user has left the chat"); // io.emit all clients
+    // Broadcast to room except client when client leaves
+    socket.to(roomId).emit("infoMessage", `"${userName}" has left the chat`);
   });
 
   // listen for new chatMessage
   socket.on("chatMessage", (msgObject) => {
-    io.emit("chatMessage", msgObject); //broadcast to all
+    let rooms = [...socket.rooms];
+    //broadcast to all in the room
+    io.in(rooms[1]).emit("chatMessage", msgObject);
   });
 
   // listen for new audioFile
   socket.on("audioFile", (fileMessageObject) => {
-    io.emit("audioFile", fileMessageObject); //broadcast to all
+    let rooms = [...socket.rooms];
+    //broadcast to all in the room
+    io.in(rooms[1]).emit("audioFile", fileMessageObject);
+  });
+
+  // Runs when client disconnects
+  socket.on("disconnecting", () => {
+    let rooms = [...socket.rooms];
+    // broadcast to room except the client when client leaves
+    socket.to(rooms[1]).emit("infoMessage", "a user has left the chat");
   });
 });
 
