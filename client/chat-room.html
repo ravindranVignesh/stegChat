@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/stegchat.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="readWavMetaData.js"></script>
+    <script type="module" src="steg.js"></script>
+    <script defer type="module" src="app.js"></script>
+    <title>🎵StegChat</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>🎵StegChat</h1>
+
+      <div id="chat-area">
+        <div id="message-container"></div>
+        <form id="form">
+          <div id="usr">
+            <label for="username-input">Username</label>
+            <input type="text" id="username-input" />
+          </div>
+          <div id="msg">
+            <label for="message-input">Message</label>
+            <input type="text" id="message-input" />
+            <button type="submit" id="submit-button">Send</button>
+          </div>
+          <div id="room">
+            <label for="room-button">Room</label>
+            <input type="text" id="room-input" />
+            <button id="room-button">Join</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="msg-input">
+        <label for="secret-message">Enter message to encode</label>
+        <input
+          type="text"
+          name="secret-message"
+          id="secret-message"
+          value="Hola"
+        />
+      </div>
+      <div class="wav-input">
+        <label for="wav-file">Select Wav files</label>
+        <input type="file" name="wav-file" id="wav-file" accept=".wav" />
+      </div>
+      <div><button id="btn-encode">Encode and send</button></div>
+    </div>
+  </body>
+</html>

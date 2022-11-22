@@ -2,6 +2,11 @@ import FileSaver from "file-saver";
 import { io } from "socket.io-client";
 import { encode, decode } from "./steg";
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const userName = urlParams.get("username");
+const roomId = urlParams.get("roomId");
+
 const socket = io();
 
 const messageContainer = document.getElementById("message-container");
