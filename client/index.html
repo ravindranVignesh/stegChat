@@ -3,32 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/stegchat.svg" />
+    <link rel="stylesheet" href="index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <title>🎵StegChat</title>
   </head>
   <body>
-    <form action="chat-room.html">
-      <div class="form-control">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter username"
-          required
-        />
+    <div id="header">
+      <div id="logo">
+        <img src="public/stegchat.svg" width="50px" height="50px" alt="🎵" />
+        <span>StegChat</span>
       </div>
-      <div class="form-control">
-        <label for="room">Room</label>
-        <input
-          type="text"
-          name="roomId"
-          id="roomId"
-          placeholder="Enter roomId"
-          required
-        />
+      <!-- link to github -->
+      <div id="github">test</div>
+    </div>
+    <div id="form-wrapper">
+      <div id="form-container">
+        <h3>Join A Room</h3>
+        <form action="chat-room.html">
+          <div class="form-control">
+            <input
+              class="input-field"
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter username"
+              required
+            />
+          </div>
+          <div class="form-control">
+            <input
+              class="input-field"
+              type="text"
+              name="roomId"
+              id="roomId"
+              placeholder="Enter roomId"
+              required
+            />
+          </div>
+          <button type="submit" id="submit-btn">Join Chat</button>
+        </form>
       </div>
-      <button type="submit" class="btn">Join Chat</button>
-    </form>
+    </div>
   </body>
 </html>

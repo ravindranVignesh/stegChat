@@ -1,0 +1,86 @@
+* {
+  font-family: "Alexandria", sans-serif;
+  font-size: 18px;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  /* margin: 0;
+  padding: 0; */
+  /* font-family: "Alexandria", sans-serif; */
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+#form-container {
+  /* margin-top: 150px */
+  /* margin: 15px;
+  padding: 15px; */
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  transform: translateY(-4em);
+}
+
+form {
+  margin: 10px;
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  margin: 5px;
+  width: 230px;
+  height: 35px;
+  padding: 3px;
+  border: 2px solid black;
+}
+
+#submit-btn {
+  margin: 5px;
+  width: 110px;
+  height: 35px;
+}
+
+/* header */
+#logo {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  margin-left: 3rem;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+#header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#github {
+  margin-right: 3rem;
+  padding: 1em;
+}
+
+/* centering form container */
+#form-wrapper {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.form-control {
+  margin: 5px;
+}
