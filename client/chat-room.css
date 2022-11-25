@@ -1,0 +1,86 @@
+:root {
+  --dark-color-a: #667aff;
+  --dark-color-b: #7386ff;
+  --light-color: #fafbff;
+  --light-color-b: #d8d8d8;
+  --success-color: #5cb85c;
+  --error-color: #d9534f;
+}
+
+* {
+  font-family: "Alexandria", sans-serif;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--light-color);
+}
+/* header */
+#logo {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  margin-left: 3rem;
+}
+
+#logo-text {
+  font-weight: bolder;
+  font-size: xx-large;
+}
+
+#header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#github {
+  margin-right: 3rem;
+  padding: 1.5em;
+}
+
+/* buttons and inputs */
+.btn {
+  cursor: pointer;
+  padding: 5px 15px;
+  background: var(--dark-color-b);
+  color: whitesmoke;
+  border: 0;
+  border-radius: 5px;
+}
+
+/* file input button */
+#wav-file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+.wav-input label {
+  display: block;
+}
+
+.wav-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+#wav-file-name {
+  margin-left: 1em;
+}
+
+/* message-container */
+#message-container {
+  width: 500px;
+  height: 500px;
+  border: 1px solid red;
+}

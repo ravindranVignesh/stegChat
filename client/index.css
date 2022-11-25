@@ -1,12 +1,25 @@
+:root {
+  --dark-color-a: #667aff;
+  --dark-color-b: #7386ff;
+  --light-color: #fafbff;
+  --light-color-b: #e9e9e9;
+  --success-color: #5cb85c;
+  --error-color: #d9534f;
+}
+
 * {
   font-family: "Alexandria", sans-serif;
   font-size: 18px;
+  box-sizing: border-box;
+  background: var(--light-color);
 }
+
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
+  background: var(--light-color);
 }
 body {
   /* margin: 0;
@@ -44,6 +57,7 @@ form {
   height: 35px;
   padding: 3px;
   border: 2px solid black;
+  background: var(--light-color-b);
 }
 
 #submit-btn {
@@ -58,8 +72,11 @@ form {
   align-items: center;
   padding: 1em;
   margin-left: 3rem;
+}
+
+#logo-text {
   font-weight: bolder;
-  font-size: larger;
+  font-size: xx-large;
 }
 
 #header {
@@ -71,7 +88,7 @@ form {
 
 #github {
   margin-right: 3rem;
-  padding: 1em;
+  padding: 1.5em;
 }
 
 /* centering form container */

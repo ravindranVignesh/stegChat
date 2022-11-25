@@ -10,6 +10,9 @@ const roomId = urlParams.get("roomId");
 const messageContainer = document.getElementById("message-container");
 const leaveRoomButton = document.getElementById("leave-room-btn");
 const messageInput = document.getElementById("message-input");
+const wavFileInput = document.getElementById("wav-file");
+const secretMessageInput = document.getElementById("secret-message");
+const encodeBtn = document.getElementById("btn-encode");
 const form = document.getElementById("form");
 
 const socket = io();
@@ -84,17 +87,14 @@ const displayInfo = (message) => {
 
 // -------------------------------------------------
 
-const encodeBtn = document.getElementById("btn-encode");
-
 encodeBtn.addEventListener("click", async () => {
-  const wavFileInput = document.getElementById("wav-file");
   if (wavFileInput.files === undefined || wavFileInput.files.length === 0) {
     console.log(`select files to proceed with encoding`);
     return;
   }
   const fileFullName = wavFileInput.files[0].name;
   const fileName = fileFullName.slice(0, fileFullName.search(".wav"));
-  const secretMessage = document.getElementById("secret-message").value;
+  const secretMessage = secretMessageInput.value;
   const arrayBuffer = await getArrayBuffer(wavFileInput);
   const encodedBuffer = encode(arrayBuffer, secretMessage);
   const encodedBlob = new Blob([encodedBuffer], { type: "audio/wav" });
@@ -129,4 +129,15 @@ const getArrayBuffer = async (wavFileInput) => {
   let file = wavFileInput.files[0];
   const arrBuff = await file.arrayBuffer();
   return arrBuff;
+};
+
+wavFileInput.onchange = () => {
+  const fileNameLabel = document.getElementById("wav-file-name");
+  if (wavFileInput.files === undefined || wavFileInput.files.length === 0) {
+    fileNameLabel.innerText = "";
+    return;
+  }
+  const fileFullName = wavFileInput.files[0].name;
+  const fileName = fileFullName.slice(0, fileFullName.search(".wav"));
+  fileNameLabel.innerText = fileName;
 };
