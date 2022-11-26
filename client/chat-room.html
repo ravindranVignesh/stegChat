@@ -12,15 +12,14 @@
     />
     <link rel="stylesheet" href="chat-room.css" />
     <script defer type="module" src="app.js"></script>
-    <title>🎵StegChat</title>
+    <title>StegChat</title>
   </head>
   <body>
     <div id="header">
       <div id="logo">
-        <img src="public/stegchat.svg" width="50px" height="50px" alt="🎵" />
+        <img src="/stegchat.svg" width="50px" height="50px" alt="🎵" />
         <span id="logo-text">StegChat</span>
       </div>
-      <!-- link to github -->
       <div id="github">
         <a href="https://github.com/ravindranVignesh">
           <svg
@@ -39,38 +38,54 @@
         </a>
       </div>
     </div>
+
     <div id="app">
-      <div id="chat-area">
-        <div id="message-container"></div>
-        <form id="form">
-          <div id="msg">
-            <label for="message-input">Message</label>
-            <input type="text" id="message-input" />
-            <button type="submit" class="btn" id="submit-button">Send</button>
-          </div>
-          <div id="room">
-            <button id="leave-room-btn" class="btn">Leave Room</button>
-          </div>
-        </form>
+      <div id="room">
+        <span id="room-id"></span>
+        <button id="leave-room-btn" class="btn neg-btn">
+          <img class="ui-icon" src="/leave.svg" alt="" />
+          Leave Room
+        </button>
       </div>
 
-      <div class="msg-input">
-        <label for="secret-message">Enter message to encode</label>
-        <input
-          type="text"
-          name="secret-message"
-          id="secret-message"
-          value="Hola"
-        />
+      <div id="chat-area">
+        <div id="message-container"></div>
+
+        <form id="form">
+          <div id="msg">
+            <input
+              type="text"
+              id="message-input"
+              placeholder="Enter Text Message"
+            />
+            <button type="submit" class="btn" id="submit-button">
+              <img class="ui-icon" src="/send.svg" />
+              Send
+            </button>
+          </div>
+        </form>
+
+        <div id="steg-section-label">Steganographic message</div>
+
+        <div class="wav-input">
+          <input type="file" name="wav-file" id="wav-file" accept=".wav" />
+          <label class="btn" for="wav-file">Select Wav file</label>
+          <div id="wav-file-name"></div>
+        </div>
+
+        <div class="msg-input">
+          <input
+            type="text"
+            name="secret-message"
+            id="secret-message"
+            placeholder="Enter message to Encode"
+          />
+          <button id="btn-encode" class="btn">
+            <img class="ui-icon" src="/stegchat-white.svg" />
+            Send
+          </button>
+        </div>
       </div>
-      <p></p>
-      <div class="wav-input">
-        <input type="file" name="wav-file" id="wav-file" accept=".wav" />
-        <label class="btn" for="wav-file">Select Wav file</label>
-        <div id="wav-file-name"></div>
-      </div>
-      <p></p>
-      <div><button id="btn-encode" class="btn">Encode and send</button></div>
     </div>
   </body>
 </html>

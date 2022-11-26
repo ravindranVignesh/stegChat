@@ -7,16 +7,18 @@ const urlParams = new URLSearchParams(queryString);
 const userName = urlParams.get("username");
 const roomId = urlParams.get("roomId");
 
-const messageContainer = document.getElementById("message-container");
+const roomLabel = document.getElementById("room-id");
 const leaveRoomButton = document.getElementById("leave-room-btn");
+const messageContainer = document.getElementById("message-container");
 const messageInput = document.getElementById("message-input");
 const wavFileInput = document.getElementById("wav-file");
 const secretMessageInput = document.getElementById("secret-message");
 const encodeBtn = document.getElementById("btn-encode");
 const form = document.getElementById("form");
 
-const socket = io();
+roomLabel.innerText = roomId;
 
+const socket = io();
 // join the room
 socket.emit("joinRoom", { userName, roomId });
 
