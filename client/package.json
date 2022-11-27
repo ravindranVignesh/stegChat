@@ -1,7 +1,7 @@
 {
   "name": "stegchat-client",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Client for A simple chat app which implements Audio Steganography",
   "type": "module",
   "scripts": {

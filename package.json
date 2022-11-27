@@ -1,23 +1,26 @@
 {
   "name": "stegchat",
-	"private": true,
-  "version": "0.0.1",
-	"description": "A simple chat app which implements Audio Steganography",
+  "private": true,
+  "version": "0.0.2",
+  "description": "A simple chat app which implements Audio Steganography",
   "main": "index.js",
   "scripts": {
-		"dev-client":"npm run dev --prefix client",
-		"dev-server": "npm run dev --prefix server",
-		"dev": "npm run dev-client npm run dev-server",
-		"build-client": "npm install --prefix client && npm run build --prefix client",
-		"build-server": "npm install --prefix server",
-		"build": "npm run build-client && npm run build-server",
-		"start": "npm start --prefix server"
+    "dev-client": "npm run dev --prefix client",
+    "dev-server": "npm run dev --prefix server",
+    "dev": "npm run dev-client npm run dev-server",
+    "build-client": "npm install --prefix client && npm run build --prefix client",
+    "build-server": "npm install --prefix server",
+    "build": "npm run build-client && npm run build-server",
+    "start": "npm start --prefix server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ravindranVignesh/stegChat.git"
   },
-  "keywords": ["chat-app", "Steganography"],
+  "keywords": [
+    "chat-app",
+    "Steganography"
+  ],
   "author": "ravindranVignesh",
   "license": "ISC",
   "bugs": {
