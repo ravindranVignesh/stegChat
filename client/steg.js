@@ -58,11 +58,4 @@ const spliceIntoChunks = (arr, chunkSize) => {
   return res;
 };
 
-export {
-  encode,
-  decode,
-  getBitsArray,
-  getString,
-  spliceIntoChunks,
-  endOfMsgMarker,
-};
+export { encode, decode };
