@@ -35,56 +35,127 @@ socket.on("infoMessage", (message) => {
 
 // receiveing chatMessages
 socket.on("chatMessage", (msgObject) => {
-  let { textMessage } = msgObject;
-  let sender = msgObject.userName;
-  sender = sender == userName ? "You" : sender;
-  displayMessage(sender, textMessage);
+  displayMessage(msgObject);
 });
 
 // receiveing audioFiles
 socket.on("audioFile", (fileMessageObject) => {
-  const sender = fileMessageObject.userName;
-  if (sender === userName) return;
+  const { sender, timeStamp, fileName } = fileMessageObject;
   const arrayBuffer = fileMessageObject.body;
-  const fileName = fileMessageObject.fileName;
+  const secretMessage = decode(arrayBuffer);
+  displayStegMessage({ sender, timeStamp, textMessage: secretMessage });
+  if (sender !== userName) {
+    downloadFile(arrayBuffer, fileName);
+  }
+});
+
+const downloadFile = (arrayBuffer, fileName) => {
   const blob = new Blob([arrayBuffer], { type: "audio/wav" });
   FileSaver.saveAs(blob, fileName);
-  const secretMessage = decode(arrayBuffer);
-  console.log(secretMessage);
-  displayMessage("Steganographic message", secretMessage);
-});
+};
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  let timeStamp = new Date().toString();
   const textMessage = messageInput.value;
-
   if (textMessage == "") return;
-  // displayMessage(textMessage);
+  let msgObject = {
+    textMessage,
+    timeStamp,
+    sender: userName,
+  };
   messageInput.value = "";
   // emit message to server
-  socket.emit("chatMessage", { userName, textMessage });
+  socket.emit("chatMessage", msgObject);
 });
 
-const displayMessage = (sender, textMessage) => {
-  const div = document.createElement("div");
-  div.classList.add("chat-message");
-  div.innerHTML = `<p class="chat-message-header">${sender} <span>11:11</span> </p>
-	<p class="chat-message-body">${textMessage}</p>
-	`;
-  if (sender == "You") {
-    div.classList.add("self-message");
-  }
-  messageContainer.append(div);
+const displayMessage = (msgObject) => {
+  let { sender } = msgObject;
+  let bubble =
+    sender == userName
+      ? getSentBubble(msgObject)
+      : getReceivedBubble(msgObject);
+
+  messageContainer.append(bubble);
+};
+
+const getSentBubble = (msgObject) => {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("sent-bubble-wrapper");
+  const bubble = document.createElement("div");
+  bubble.classList.add("message-bubble", "msg-sent");
+  const meta = document.createElement("div");
+  meta.classList.add("msg-meta", "msg-meta-sent");
+  let nametag = document.createElement("span");
+  nametag.classList.add("sender-nametag");
+  let time = document.createElement("span");
+  time.classList.add("time-stamp");
+  const body = document.createElement("div");
+  body.classList.add("msg-body");
+
+  nametag.innerText = "You";
+  time.innerText = msgObject.timeStamp;
+  body.innerText = msgObject.textMessage;
+  meta.append(nametag);
+  meta.append(time);
+  bubble.append(meta);
+  bubble.append(body);
+  wrapper.append(bubble);
+
+  return wrapper;
+};
+
+const getReceivedBubble = (msgObject) => {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("received-bubble-wrapper");
+  const bubble = document.createElement("div");
+  bubble.classList.add("message-bubble", "msg-received");
+  const meta = document.createElement("div");
+  meta.classList.add("msg-meta", "msg-meta-received");
+  let nametag = document.createElement("span");
+  nametag.classList.add("sender-nametag");
+  let time = document.createElement("span");
+  time.classList.add("time-stamp");
+  const body = document.createElement("div");
+  body.classList.add("msg-body");
+
+  nametag.innerText = msgObject.sender;
+  time.innerText = msgObject.timeStamp;
+  body.innerText = msgObject.textMessage;
+  meta.append(nametag);
+  meta.append(time);
+  bubble.append(meta);
+  bubble.append(body);
+  wrapper.append(bubble);
+
+  return wrapper;
 };
 
 const displayInfo = (message) => {
-  const div = document.createElement("div");
-  div.classList.add("info-message");
-  div.innerHTML = `
-	<p class="info-message-header">StegChat <span>11:11</span> </p>
-	<p class="info-message-body">${message}</p>
-	`;
-  messageContainer.append(div);
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("info-message-wrapper");
+  const body = document.createElement("span");
+  body.classList.add("info-msg-body");
+  body.innerText = message;
+  wrapper.append(body);
+
+  messageContainer.append(wrapper);
+};
+
+const displayStegMessage = (msgObject) => {
+  let { sender } = msgObject;
+  let bubble =
+    sender == userName
+      ? getSentBubble(msgObject)
+      : getReceivedBubble(msgObject);
+
+  let msgMarker = document.createElement("div");
+  msgMarker.classList.add("steg-msg-marker");
+  msgMarker.innerText = "Steganographic Message";
+
+  bubble.children[0].children[1].prepend(msgMarker);
+
+  messageContainer.append(bubble);
 };
 
 // -------------------------------------------------
@@ -94,6 +165,7 @@ encodeBtn.addEventListener("click", async () => {
     console.log(`select files to proceed with encoding`);
     return;
   }
+  const timeStamp = new Date().toString();
   const fileFullName = wavFileInput.files[0].name;
   const fileName = fileFullName.slice(0, fileFullName.search(".wav"));
   const secretMessage = secretMessageInput.value;
@@ -106,10 +178,9 @@ encodeBtn.addEventListener("click", async () => {
   FileSaver.saveAs(encodedBlob, `${fileName}-encoded.wav`);
   // send encodedFile via socket
   const fileMessageObject = {
-    userName: userName,
-    type: "file",
+    sender: userName,
+    timeStamp,
     body: encodedFile,
-    mimeType: encodedFile.type,
     fileName: encodedFile.name,
   };
   socket.emit("audioFile", fileMessageObject);

@@ -2,14 +2,13 @@ const path = require("path");
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
+const { getTimeString } = require("./util");
 
 const app = express();
 const server = http.createServer(app);
 const io = new socketio.Server(server, {
   maxHttpBufferSize: 1e8,
 });
-
-//# declare a global haspmap to store the socketId, userName = > useful for displaying left message when user is "disconnecting" .
 
 // set static folder
 app.use(express.static(path.join(__dirname, "..", "client", "dist")));
@@ -38,6 +37,7 @@ io.on("connection", (socket) => {
   socket.on("chatMessage", (msgObject) => {
     let rooms = [...socket.rooms];
     //broadcast to all in the room
+    msgObject.timeStamp = getTimeString(msgObject.timeStamp);
     io.in(rooms[1]).emit("chatMessage", msgObject);
   });
 
@@ -45,6 +45,7 @@ io.on("connection", (socket) => {
   socket.on("audioFile", (fileMessageObject) => {
     let rooms = [...socket.rooms];
     //broadcast to all in the room
+    fileMessageObject.timeStamp = getTimeString(fileMessageObject.timeStamp);
     io.in(rooms[1]).emit("audioFile", fileMessageObject);
   });
 
