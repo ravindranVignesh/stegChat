@@ -1,0 +1,300 @@
+:root {
+  --accent-color: #725ac1;
+  --glow-color: #6547c7;
+  --supplement-color: #5a76c1;
+  --light-color-a: #fafbff;
+  --light-color-b: #d8d8d8;
+  --steg-color-a: #5cb85c;
+  --steg-color-b: #77d877;
+  --error-color: #d9534f;
+}
+
+* {
+  font-family: "Alexandria", sans-serif;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--light-color-a);
+}
+
+/* header */
+#header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#logo {
+  cursor: default;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  margin-left: 3rem;
+}
+
+#logo:hover {
+  filter: drop-shadow(0 0 1em var(--glow-color));
+}
+
+#logo-text {
+  font-weight: bolder;
+  font-size: xx-large;
+}
+
+#github {
+  margin-right: 3rem;
+  padding: 1.5em;
+}
+
+#gh-svg:hover {
+  filter: drop-shadow(0 0 0.75em #0fa);
+}
+
+/* buttons and inputs */
+.btn {
+  cursor: pointer;
+  padding: 5px 10px;
+  background: var(--supplement-color);
+  color: whitesmoke;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn:hover {
+  filter: drop-shadow(0 0 0.5em var(--glow-color));
+}
+
+.neg-btn {
+  background: var(--error-color);
+}
+
+.neg-btn:hover {
+  filter: drop-shadow(0 0 0.3em var(--error-color));
+}
+
+/* ui icons */
+.ui-icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  border-radius: 3px;
+  background: var(--light-color-b);
+  border: 1px solid black;
+}
+
+/* message-container */
+#app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#room {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1em 0.5em 1em;
+}
+
+#room-id {
+  font-weight: bold;
+  cursor: default;
+}
+
+#chat-area {
+  width: 60%;
+}
+
+#message-container {
+  border-radius: 10px;
+  width: 100%;
+  height: 55vh;
+  max-height: 55vh;
+  padding: 0.5em 0.2em;
+  background: var(--light-color-b);
+  overflow-y: auto;
+}
+
+/* chat scrollbar */
+#message-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+#message-container::-webkit-scrollbar-track {
+  background: var(--light-color-b);
+}
+
+#message-container::-webkit-scrollbar-thumb {
+  background-color: var(--supplement-color);
+  border-radius: 20px;
+  border: 3px solid var(--light-color-b);
+}
+
+/* Text message form*/
+#msg {
+  padding: 0 0.5em;
+  margin-top: 0.5em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#message-input {
+  margin-right: 0.5em;
+  width: 100%;
+}
+
+/* secret-message section */
+#steg-section-label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0.3em;
+  font-weight: bold;
+  font-size: larger;
+  cursor: default;
+}
+
+/* wav file input */
+.wav-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  padding: 0 0.5em;
+  margin-bottom: 0.5em;
+  box-sizing: content-box;
+}
+
+/* file input button */
+#wav-file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+#wav-file-label {
+  box-sizing: content-box;
+}
+
+/* file input label focus */
+.wav-file-focus {
+  border: 2px solid black;
+}
+
+#wav-file-name {
+  margin-right: 1em;
+}
+
+.msg-input {
+  padding: 0 0.5em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#secret-message {
+  margin-right: 0.5em;
+  width: 100%;
+}
+
+/* dynamic elements */
+.info-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.1em;
+}
+
+.info-msg-body {
+  font-style: italic;
+  font-size: medium;
+  color: var(--supplement-color);
+}
+
+.msg-meta {
+  font-weight: bold;
+}
+
+.sender-nametag {
+  padding-right: 5px;
+}
+
+.time-stamp {
+  font-weight: bold;
+  font-size: small;
+}
+
+.message-bubble {
+  max-width: 60%;
+  margin-bottom: 0.1em;
+}
+
+.received-bubble-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.1em;
+}
+
+.msg-received {
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-radius: 20px 20px 20px 3px;
+  background: var(--accent-color);
+  color: white;
+}
+
+.msg-meta-received {
+  color: black;
+}
+
+.sent-bubble-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.1em;
+}
+
+.msg-sent {
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-radius: 20px 3px 20px 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: end;
+}
+
+.msg-meta-sent {
+  color: var(--accent-color);
+}
+
+.steg-msg-marker {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.msg-sent > .msg-body > .steg-msg-marker {
+  color: var(--steg-color-a);
+}
+
+.msg-received > .msg-body > .steg-msg-marker {
+  color: var(--steg-color-b);
+}
