@@ -1,4 +1,8 @@
 // UI enhancements
+window.onload = function () {
+  document.getElementById("message-input").focus();
+};
+
 const wavFileInput = document.getElementById("wav-file");
 wavFileInput.onchange = () => {
   const fileNameLabel = document.getElementById("wav-file-name");

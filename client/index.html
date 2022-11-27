@@ -16,12 +16,17 @@
   <body>
     <div id="header">
       <div id="logo">
-        <img src="/stegchat.svg" width="50px" height="50px" alt="🎵" />
+        <img
+          id="logo-svg"
+          src="/stegchat.svg"
+          width="50px"
+          height="50px"
+          alt="🎵"
+        />
         <span id="logo-text">StegChat</span>
       </div>
-      <!-- link to github -->
       <div id="github">
-        <a href="https://github.com/ravindranVignesh">
+        <a id="gh-svg" href="https://github.com/ravindranVignesh/stegChat">
           <svg
             height="40"
             aria-hidden="true"
@@ -38,6 +43,7 @@
         </a>
       </div>
     </div>
+
     <div id="form-wrapper">
       <div id="form-container">
         <h3>Join A Room</h3>
@@ -62,9 +68,15 @@
               required
             />
           </div>
-          <button type="submit" id="submit-btn">Join Chat</button>
+          <button class="btn" type="submit" id="submit-btn">Join Chat</button>
         </form>
       </div>
     </div>
+
+    <script>
+      window.onload = function () {
+        document.getElementById("username").focus();
+      };
+    </script>
   </body>
 </html>

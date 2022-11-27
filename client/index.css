@@ -1,17 +1,16 @@
 :root {
-  --dark-color-a: #667aff;
-  --dark-color-b: #7386ff;
-  --light-color: #fafbff;
-  --light-color-b: #e9e9e9;
-  --success-color: #5cb85c;
-  --error-color: #d9534f;
+  --accent-color: #725ac1;
+  --glow-color: #6547c7;
+  --light-color-a: #fafbff;
+  --light-color-b: #d8d8d8;
+  --join-glow-color: #2daf2d;
+  --join-color: #77d877;
 }
 
 * {
   font-family: "Alexandria", sans-serif;
   font-size: 18px;
   box-sizing: border-box;
-  background: var(--light-color);
 }
 
 html,
@@ -19,22 +18,23 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: var(--light-color);
+  background: var(--light-color-a);
 }
 body {
-  /* margin: 0;
-  padding: 0; */
-  /* font-family: "Alexandria", sans-serif; */
   flex-direction: column;
   align-items: center;
   display: flex;
   justify-content: center;
 }
 
+h3 {
+  font-weight: bold;
+  font-size: x-large;
+  margin-bottom: 0;
+  cursor: default;
+}
+
 #form-container {
-  /* margin-top: 150px */
-  /* margin: 15px;
-  padding: 15px; */
   justify-content: center;
   align-items: center;
   display: flex;
@@ -91,6 +91,15 @@ form {
   padding: 1.5em;
 }
 
+#gh-svg:hover {
+  filter: drop-shadow(0 0 0.75em #0fa);
+}
+
+#logo:hover {
+  cursor: default;
+  filter: drop-shadow(0 0 1em var(--glow-color));
+}
+
 /* centering form container */
 #form-wrapper {
   display: flex;
@@ -100,4 +109,21 @@ form {
 
 .form-control {
   margin: 5px;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 5px 10px;
+  background: var(--join-color);
+  color: whitesmoke;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn:focus,
+.btn:hover {
+  filter: drop-shadow(0 0 0.5em var(--join-glow-color));
 }

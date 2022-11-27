@@ -67,15 +67,20 @@ chatMsgForm.addEventListener("submit", (e) => {
   };
   socket.emit("chatMessage", msgObject);
   messageInput.value = "";
+  messageInput.focus();
 });
 
 // sending audioFiles
 encodeBtn.addEventListener("click", () => {
   encodeAndSend();
+  messageInput.focus();
 });
 
 secretMessageInput.addEventListener("keypress", (e) => {
-  if (e.key == "Enter") encodeAndSend();
+  if (e.key == "Enter") {
+    encodeAndSend();
+    messageInput.focus();
+  }
 });
 
 const encodeAndSend = async () => {
@@ -124,6 +129,7 @@ const displayInfo = (message) => {
   body.innerText = message;
   wrapper.append(body);
   messageContainer.append(wrapper);
+  messageContainer.scrollTop = messageContainer.scrollHeight;
 };
 
 const displayMessage = (msgObject) => {
@@ -133,6 +139,7 @@ const displayMessage = (msgObject) => {
       ? getSentBubble(msgObject)
       : getReceivedBubble(msgObject);
   messageContainer.append(bubble);
+  messageContainer.scrollTop = messageContainer.scrollHeight;
 };
 
 const displayStegMessage = (msgObject) => {
@@ -144,4 +151,5 @@ const displayStegMessage = (msgObject) => {
   let msgMarker = getStegMarker();
   bubble.children[0].children[1].prepend(msgMarker);
   messageContainer.append(bubble);
+  messageContainer.scrollTop = messageContainer.scrollHeight;
 };

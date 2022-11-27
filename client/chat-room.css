@@ -1,8 +1,7 @@
 :root {
   --accent-color: #725ac1;
+  --glow-color: #6547c7;
   --supplement-color: #5a76c1;
-  --dark-color-a: #667aff;
-  --dark-color-b: #7386ff;
   --light-color-a: #fafbff;
   --light-color-b: #d8d8d8;
   --steg-color-a: #5cb85c;
@@ -23,8 +22,10 @@ body {
   height: 100%;
   background: var(--light-color-a);
 }
+
 /* header */
 #logo {
+  cursor: default;
   display: flex;
   align-items: center;
   padding: 1em;
@@ -48,6 +49,14 @@ body {
   padding: 1.5em;
 }
 
+#gh-svg:hover {
+  filter: drop-shadow(0 0 0.75em #0fa);
+}
+
+#logo:hover {
+  filter: drop-shadow(0 0 1em var(--glow-color));
+}
+
 /* buttons and inputs */
 .btn {
   cursor: pointer;
@@ -61,19 +70,26 @@ body {
   justify-content: space-around;
 }
 
+.btn:hover {
+  filter: drop-shadow(0 0 0.5em var(--glow-color));
+}
+
 .neg-btn {
   background: var(--error-color);
 }
 
+.neg-btn:hover {
+  filter: drop-shadow(0 0 0.3em var(--error-color));
+}
+
 /* message-container */
 #app {
-  /* width: 60%; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid green; */
 }
+
 #message-container {
   border-radius: 10px;
   width: 100%;
@@ -82,6 +98,20 @@ body {
   padding: 0.5em 0.2em;
   background: var(--light-color-b);
   overflow-y: auto;
+}
+/* chat scrollbar */
+#message-container::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+
+#message-container::-webkit-scrollbar-track {
+  background: var(--light-color-b); /* color of the tracking area */
+}
+
+#message-container::-webkit-scrollbar-thumb {
+  background-color: var(--supplement-color);
+  border-radius: 20px;
+  border: 3px solid var(--light-color-b);
 }
 
 #chat-area {
@@ -98,6 +128,7 @@ body {
 
 #room-id {
   font-weight: bold;
+  cursor: default;
 }
 
 /* ui icons */
@@ -138,7 +169,6 @@ input[type="text"] {
   flex-direction: row-reverse;
   padding: 0 0.5em;
   margin-bottom: 0.5em;
-  /* border: 1px solid purple; */
 }
 
 /* file input button */
@@ -154,7 +184,6 @@ input[type="text"] {
 }
 
 /* secret-message section */
-
 #steg-section-label {
   width: 100%;
   display: flex;
@@ -180,17 +209,17 @@ input[type="text"] {
 /* message bubble */
 .message-bubble {
   /* border: 1px solid red; */
-  width: 60%;
+  max-width: 60%;
   margin-bottom: 0.1em;
 }
 .msg-received {
-  padding: 0.2em 0 0.2em 0.5em;
+  padding: 0.2em 0.5em 0.2em 0.5em;
   border-radius: 20px 20px 20px 3px;
   background: var(--accent-color);
   color: white;
 }
 .msg-sent {
-  padding: 0.2em 0.5em 0.2em 0;
+  padding: 0.2em 0.5em 0.2em 0.5em;
   border-radius: 20px 3px 20px 20px;
   background: white;
   display: flex;
@@ -258,21 +287,6 @@ input[type="text"] {
   color: var(--steg-color-b);
 }
 
-/* chat scrollbar */
-#message-container::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
-}
-
-#message-container::-webkit-scrollbar-track {
-  background: var(--light-color-b); /* color of the tracking area */
-}
-
-#message-container::-webkit-scrollbar-thumb {
-  background-color: var(--supplement-color);
-  border-radius: 20px;
-  border: 3px solid var(--light-color-b);
-}
-
 .wav-input {
   box-sizing: content-box;
 }
@@ -283,4 +297,8 @@ input[type="text"] {
 /* file input label focus */
 .wav-file-focus {
   border: 2px solid black;
+}
+
+#steg-section-label {
+  cursor: default;
 }
