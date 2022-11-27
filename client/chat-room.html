@@ -49,33 +49,7 @@
       </div>
 
       <div id="chat-area">
-        <div id="message-container">
-          <div class="sent-bubble-wrapper">
-            <div class="message-bubble msg-sent">
-              <div class="msg-meta msg-meta-sent">
-                <span class="sender-nametag"> You </span>
-                <span class="time-stamp">11:03</span>
-              </div>
-              <div class="msg-body">
-                <div class="steg-msg-marker">Steganographic message</div>
-                top Secret
-              </div>
-            </div>
-          </div>
-
-          <div class="received-bubble-wrapper">
-            <div class="message-bubble msg-received">
-              <div class="msg-meta msg-meta-received">
-                <span class="sender-nametag"> You </span>
-                <span class="time-stamp">11:03</span>
-              </div>
-              <div class="msg-body">
-                <div class="steg-msg-marker">Steganographic message</div>
-                top Secret
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="message-container"></div>
 
         <form id="form">
           <div id="msg">
@@ -95,7 +69,9 @@
 
         <div class="wav-input">
           <input type="file" name="wav-file" id="wav-file" accept=".wav" />
-          <label class="btn" for="wav-file">Select Wav file</label>
+          <label id="wav-file-label" class="btn" for="wav-file"
+            >Select Wav file</label
+          >
           <div id="wav-file-name"></div>
         </div>
 

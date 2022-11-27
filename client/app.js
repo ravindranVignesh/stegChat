@@ -214,3 +214,10 @@ wavFileInput.onchange = () => {
   const fileName = fileFullName.slice(0, fileFullName.search(".wav"));
   fileNameLabel.innerText = fileName;
 };
+
+wavFileInput.onfocus = () => {
+  wavFileInput.nextElementSibling.classList.add("wav-file-focus");
+};
+wavFileInput.onblur = () => {
+  wavFileInput.nextElementSibling.classList.remove("wav-file-focus");
+};

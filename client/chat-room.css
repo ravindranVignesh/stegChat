@@ -3,10 +3,10 @@
   --supplement-color: #5a76c1;
   --dark-color-a: #667aff;
   --dark-color-b: #7386ff;
-  --light-color: #fafbff;
+  --light-color-a: #fafbff;
   --light-color-b: #d8d8d8;
-  --success-color: #5cb85c;
-  --success-color-b: #77d877;
+  --steg-color-a: #5cb85c;
+  --steg-color-b: #77d877;
   --error-color: #d9534f;
 }
 
@@ -21,7 +21,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: var(--light-color);
+  background: var(--light-color-a);
 }
 /* header */
 #logo {
@@ -252,10 +252,10 @@ input[type="text"] {
 }
 
 .msg-sent > .msg-body > .steg-msg-marker {
-  color: var(--success-color);
+  color: var(--steg-color-a);
 }
 .msg-received > .msg-body > .steg-msg-marker {
-  color: var(--success-color-b);
+  color: var(--steg-color-b);
 }
 
 /* chat scrollbar */
@@ -271,4 +271,16 @@ input[type="text"] {
   background-color: var(--supplement-color);
   border-radius: 20px;
   border: 3px solid var(--light-color-b);
+}
+
+.wav-input {
+  box-sizing: content-box;
+}
+#wav-file-label {
+  box-sizing: content-box;
+}
+
+/* file input label focus */
+.wav-file-focus {
+  border: 2px solid black;
 }
