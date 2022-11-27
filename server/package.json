@@ -1,6 +1,6 @@
 {
   "name": "stegchat-server",
-	"private": true,
+  "private": true,
   "version": "0.0.1",
   "description": "Server for A simple chat app which implements Audio Steganography",
   "main": "server.js",
