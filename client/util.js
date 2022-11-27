@@ -11,4 +11,11 @@ const getArrayBuffer = async (wavFileInput) => {
   return arrBuff;
 };
 
-export { downloadFile, getArrayBuffer };
+const getTimeString = (dateObj) => {
+  const hours = dateObj.getHours().toString().padStart(2, "0");
+  const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+  const result = `${hours}:${minutes}`;
+  return result;
+};
+
+export { downloadFile, getArrayBuffer, getTimeString };

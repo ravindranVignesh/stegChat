@@ -2,7 +2,7 @@ import FileSaver from "file-saver";
 import { io } from "socket.io-client";
 import { encode, decode } from "./steg";
 import { getReceivedBubble, getSentBubble, getStegMarker } from "./dom-util";
-import { downloadFile, getArrayBuffer } from "./util";
+import { downloadFile, getArrayBuffer, getTimeString } from "./util";
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -54,7 +54,7 @@ socket.on("audioFile", (fileMessageObject) => {
 // sending chatMessages
 chatMsgForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  let timeStamp = new Date().toString();
+  let timeStamp = getTimeString(new Date());
   const textMessage = messageInput.value;
   if (textMessage.trim().length == 0) {
     messageInput.value = "";
@@ -84,7 +84,7 @@ secretMessageInput.addEventListener("keypress", (e) => {
 });
 
 const encodeAndSend = async () => {
-  const timeStamp = new Date().toString();
+  const timeStamp = getTimeString(new Date());
   const secretMessage = secretMessageInput.value;
   if (secretMessage.trim().length === 0) {
     console.log(`enter message to proceed with encoding`);
